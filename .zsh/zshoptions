@@ -1,0 +1,42 @@
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory autocd beep extendedglob nomatch notify
+bindkey -v
+
+# Protection against rm *
+setopt NORM_STAR_SILENT
+
+# Show time for lengthy programs
+export REPORTTIME='10'
+
+# History stuff
+setopt INC_APPEND_HISTORY # append each session history to common one
+setopt SHARE_HISTORY # share history between all sessions
+setopt HIST_IGNORE_ALL_DUPS # remove dups
+setopt HIST_SAVE_NO_DUPS # don't save duplicate entries
+setopt HIST_FIND_NO_DUPS # don't show dups when scrolling history
+setopt HIST_REDUCE_BLANKS # remove useless space in stored commands
+setopt HIST_IGNORE_SPACE # don't store lines beginning with space
+
+# set dir
+setopt AUTO_NAME_DIRS # dir=/tmp/mydir permet ensuite d'avoir ~dir qui renvoie dessus, marche seulement si chemin absolu
+setopt AUTO_CD # cd if typed name is a dir name, e.g ".."
+
+# setopt EXTENDED_GLOB # enables special pattern functions, to be enabled later
+setopt CORRECT # propose correction of command names
+setopt NOCORRECT_ALL # don't propose corrections for other words than command (i.e don't think every argument is a filename
+
+# Protect from overwriting files with >, must use >|
+#setopt NO_CLOBBER
+
+# Watch connections
+watch=(notme)
+#$WATCHFMT="" # Controls other users connection logging style
+
+# Set editor
+export VISUAL='vim'
+export EDITOR='vim'
+# Set zle style (emacs, usual)
+bindkey -e
+ 

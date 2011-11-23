@@ -1,0 +1,56 @@
+# Linked options
+
+# Completion
+setopt AUTO_LIST # list automatically when multiple choices
+unsetopt MENU_COMPLETE # don't put the first answer
+setopt AUTO_MENU # use tab to navigate between possible completions
+zstyle ':completion:*' menu select=1 # navigate between options if at least 5
+# setopt COMPLETE_ALIASES # allow to define different completion for aliases than for the original command
+setopt AUTO_REMOVE_SLASH # remove trailing slash of completed name if not needed
+setopt COMPLETE_IN_WORD # allow to complete first part of a written name  : cd friz, cursor on i, <tab>  => cd frankiz
+setopt ALWAYS_TO_END # After completion, go to the end of what was completed
+setopt LIST_TYPES # Print * for executables, / for directories, @ for links, ...
+setopt LIST_PACKED # vary column widthes to spare space
+setopt LIST_ROWS_FIRST # put adjacent possibilities in same lines instead of columns
+setopt NO_LIST_BEEP # don't beep when showing a lost of choices
+
+# General info
+zstyle ':completion:*' _all_matches _list _oldlist _menu _expand _complete _match _ignored _correct _approximate _prefix
+#zstyle ':completion:*' completer _expand _complete _correct _approximate _history
+zstyle ':completion:*' max-errors 2 # don't try to correct when more than 2 errors
+zstyle ':completion:*:descriptions' format '%d :' # print in what we are looking for
+zstyle ':completion:*' group-name '' # group by type of data
+
+#ZLS_COLORS=`dircolors zshdircolors`
+#ZLS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.deb=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.mpg=01;37:*.avi=01;37:*.gl=01;37:*.dl=01;37:" #put nice colours
+zstyle ':completion:*' list-colors ${(s.:.)ZLS_COLORS} # put color everywhere !!
+
+zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' # Allow completion for a_b to ami_bak, and idem with a.b and a-b
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # case-insensitive matching
+
+
+# specific command completion
+zstyle ':completion:*:-command-' group-order builtins functions commands # modified order of completion for command completion
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'  # show processes in red for kill
+zstyle ':completion:*:*:kill:*' menu yes select 
+function _pslist() {reply=(`ps -u $USER -o pid,user,nice,pcpu,pmem,cputime,tname,start_time,args`)}
+compctl -K _pslist kill
+#zstyle ':completion:*:processes' command 'ps -u devel -o pid,user,nice,pcpu,pmem,cputime,tname,start_time,args'  #'ps ux | grep -v COMMAND | sed "s/^[a-zA-Z0#-##9#-]*//"' # Show lots of infos on processes
+
+zstyle ':completion:*:files' ignored-patterns '*?.o' '*?~' '*?.dvi' '*?.aux' '*?.swp' # do not show temp files in completions
+
+function _usedesc() {reply=(`egrep -o "^\w*" /usr/portage/profiles/use.desc`)}
+compctl -K _usedesc usedesc
+
+# not examined yet
+zstyle ':completion:*' expand prefix suffix
+zstyle ':completion:*' ignore-parents parent pwd ..
+zstyle ':completion:*' list-suffixes true
+#zstyle ':completion:*' menu select=long
+zstyle ':completion:*' original false
+zstyle ':completion:*' preserve-prefix '//[^/]##/'
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle :compinstall filename '/home/devel/.zshrc'
+
+autoload -Uz compinit
+compinit

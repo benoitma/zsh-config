@@ -1,0 +1,170 @@
+# aliases
+#alias cd='pushd' # allow to remember where I've been
+setopt PUSHD_SILENT
+
+#alias man='LC_ALL="C" man'
+#export MANPAGER="LC_ALL='C' sed -e 's/\x1B\[[[:digit:]]\+m//g' \
+#                    | tr '\267' '.' | col -b \
+#                    | vim -c 'let no_plugin_maps = 1' \
+#					      -c 'set nolist nomod ft=man' \
+#						  -c 'let g:showmarks_enable=0' \
+#						  -c 'runtime! macros/less.vim' -" 
+
+# *Very* often used!
+alias l='ls'
+alias la='ls -A'
+alias ll='ls -l'
+alias lla='ls -lsA'
+alias lsd='ls -ld *(/)'                 # only show directories
+alias lad='ls -ld .*(/)'                # only show dot-directories
+alias lsa='ls -a .*(.)'                 # only show dot-files
+alias lsd='ls -d *(/)'                  # only show directories
+alias lse='ls -d *(/^F)'                # only show empty directories
+alias lsx='ls -l *(*) | head'           # only show executables
+alias lssuid='ls -l *(s,S) | head'      # only show suid-files
+alias lsbig='ls -lSh *(.) | head'       # display the biggest files
+alias lssmall='ls -Sl *(.) | tail'      # display the smallest files
+alias lsnew='ls -rtl *(.) | tail'       # display the newest files
+alias lsold='ls -rtl *(.) | head'       # display the oldest files
+
+#alias lock="xscreensaver-command -lock"
+#alias cp="cp -iv"
+#alias rm="rm -iv"
+
+alias lsc="ls -shla"
+alias psa="ps -A"
+alias pss="ps -aux"
+alias psx="ps -AFH"
+#alias ln="ln -s -v"
+alias chmod="chmod -v"
+alias chown="chown -v"
+
+alias mount="mount -v"
+alias umount="umount -v"
+
+alias h='history'
+alias s='sudo -s'
+
+# Basic aliases
+alias grep="grep --color=always"
+#alias df="df -h"
+alias dm1="du -h --max-depth=1"
+alias dm2="du -h --max-depth=2"
+
+# No correction here
+alias mv='nocorrect mv -vi'
+alias cp='nocorrect cp -vi'
+alias mkdir='nocorrect mkdir -v'
+alias scp='nocorrect scp'
+
+alias :w='echo "Dude.. thats $SHELL:t and *not* VI(M)!"'
+alias :q='echo "Dude.. thats $SHELL:t and *not* VI(M)!"'
+alias :wq='echo "Dude.. thats $SHELL:t and *not* VI(M)!"'
+
+# grep wrapper with search highlighting (<http://www.acme.com/software/hgrep/>)
+# Only for non-linux systems needed (see below)
+if [ ! "${OSTYPE}" = linux-gnu ] && [ -x  $(which hgrep) ]; then
+        alias grep='hgrep'
+else
+        # Note: ``--color'' is a feature from GNU grep >=2.5 and i do *not*
+        #       check for the available version, but only for ``GNU''!
+        if [ "${OS}" = "linux-gnu" ] && [ -n ${(MS)$(grep --version 2>/dev/null)#GNU} ]; then
+                export GREP_COLOR='0;31'
+                (grep --help 2>/dev/null |grep -- --color=) >/dev/null && export GREP_OPTIONS='--color=auto'
+                alias hgrep='grep $GREP_OPTIONS $*'
+        fi
+fi
+
+# VimTip 121: Using vim as a syntax-highlighting pager
+# <http://vim.sourceforge.net/tip_view.php?tip_id=>
+if [ -e ~/.vimrc.more ] && [ -x $(which vim) ]; then
+        alias vmore='vim -u ~/.vimrc.more'
+fi
+
+if ((ls --help 2>/dev/null |grep -- --time-style=) >/dev/null); then
+        export TIMESTYLE=$'--time-style="+\e[0;35m%Y-%m-%d %H:%M\e[0m"'
+        alias ls="ls -b -CF -h --color=always ${TIMESTYLE}"
+else
+        alias ls="ls -b -CF -h --color=always"
+fi
+
+# convert from UPPER to lower (or back)
+alias UP2low='for i in *(.); mv $i ${i:l}'
+alias low2UP='for i in *(.); mv $i ${i:u}'
+
+# suffix aliases (needs Zsh >= 4.2.0).  Suffix aliases allow the shell
+# to run a command on a file by suffix, e.g 'alias -s ps=gv' makes
+# 'foo.ps' execute 'gv foo.ps'.
+if [[ $ZSH_VERSION == 4.2.<0->* ]]; then
+        alias -s dvi=xdvi
+        alias -s pdf=evince
+        alias -s ps=gv
+        alias -s ogg=mplayer
+        alias -s flac=mplayer
+        alias -s wav=mplayer
+        alias -s mpg=mplayer
+        alias -s wmv=mplayer
+        alias -s avi=mplayer
+        alias -s mp3=mplayer
+        alias -s html=${BROWSER:-vim}
+        alias -s htm=${BROWSER:-vim}
+        alias -s tex=${EDITOR:-vim}
+        alias -s txt=${PAGER:-vim}
+	alias -s php=${PAGER:-vim}
+        alias -s jpg=kuickview
+        alias -s jpeg=kuickview
+        alias -s xpm=kuickview
+        alias -s xbm=kuickview
+        alias -s png=kuickview
+        alias -s gif=kuickview
+        alias -s gz=less
+        alias -s tar=less
+        alias -s bz2=less
+        alias -s tgz=less
+        alias -s zip=less
+        alias -s rar=less
+        alias -s deb=less
+        alias -s exe=wine
+fi
+
+
+# recopie à l'arrache
+if which colordiff > /dev/null 2> /dev/null; then
+	alias diff='colordiff -u'
+else
+	alias diff='diff -u'
+fi
+
+
+# pour le ssh rapide
+alias fkz="ssh qt@frankiz"
+alias salleinfo="ssh -Y quentin.pleple@lada"
+alias ldn="ssh qt@ldn"
+alias gwz="ssh qt@gwz"
+alias deiz="ssh qt@deiz"
+alias heol="ssh qt@heol"
+alias moaz="ssh qt@moaz"
+alias hkn="ssh qt@hackneiz"
+alias gdl="ssh qt@gdl"
+alias pwl="ssh qt@pwl"
+alias swl="ssh qt@swl"
+alias kvh="ssh qt@kvh"
+alias tv-fayolle="ssh qt@tv-fayolle"
+
+#alias RPS="ssh simon@87.98.173.31 -o ProxyCommand='socat - PROXY:kuzh.polytechnique.fr:%h:%p,proxyport=8080'"
+#alias cdla="ssh simon@87.98.173.31 -o ProxyCommand='socat - PROXY:kuzh.polytechnique.fr:%h:%p,proxyport=8080'"
+#alias scpExt="scp -o ProxyCommand='socat - PROXY:kuzh.polytechnique.fr:%h:%p,proxyport=8080'"
+alias sshExt="ssh -o ProxyCommand='socat - PROXY:kuzh.polytechnique.fr:%h:%p,proxyport=8080'"
+# pour lancer le vnc
+alias x11vnc='x11vnc -usepw'
+
+#autres
+alias gotmp="cd /tmp/"
+
+#Commandes BR
+alias fs_etc.all="/root/bin/fetch_svn_etc.all"
+alias fs_root-bin.all="/root/bin/fetch_svn_root-bin.all"
+alias disconnect="killall -u qt ssh"
+
+# export http_proxy="kuzh.polytechnique.fr:8080"
+export EDITOR="/usr/bin/vim"

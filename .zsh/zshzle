@@ -1,0 +1,62 @@
+# red for root, blue otherwise
+if (( EUID == 0 )); then
+        PROMPT_USER_COLOR=$'%{\e[01;31m%}'
+else
+	PROMPT_USER_COLOR=$'%{\e[01;32m%}'
+fi
+
+PROMPT_HOST_AT_COLOR=$'%{\e[01;30m%}'
+#PROMPT_HOST_COLOR=$'%{\e[00;32m%}'
+PROMPT_SHELL_COLOR=$'%{\e[00;35m%}'
+
+
+# change right prompt if we're on a distant machine
+if [[ $SSH_CLIENT = *.* || $REMOTEHOST = *.* ]]; then
+	# add host to the complete path on right
+	#PROMPT_HOST_COLOR=$'%{\e[0;35m%}%m:%1~%{\e[00m%}'
+	PROMPT_HOST_COLOR=$'%{\e[0;35m%}%m%{\e[00m%}'
+	# display ssh informations on title
+	TERM_TITLE="%n@%m: %~ [$SSH_CLIENT]"
+else
+	# show complete path on right
+	PROMPT_HOST_COLOR=$'%{\e[0;36m%}%m%{\e[00m%}'
+	# simple title for terms
+	if (( EUID == 0 )); then
+		TERM_TITLE="%n@%m: %~"
+	else
+		TERM_TITLE="%m: %~"
+	fi
+fi
+
+
+#CONF_VERSION=`cat ~/.confversion`
+#CONF_VERSION_COLOR=$'%{\e[00;33m%}'
+#
+CONF_SEP_COLOR=$'%{\e[00m%}'
+#
+#if [ -f ~root/VERSION ]; then
+#	CONFROOT_VERSION=`cat ~root/VERSION`
+#	CONFROOT_VERSION_COLOR=$'%{\e[00;31m%}'
+#fi
+#
+#CONFCORE_VERSION=`cat ~/.confcoreversion`
+#CONFCORE_VERSION_COLOR=$'%{\e[00;34m%}'
+#
+#CONF_PART="$CONF_SEP_COLOR(v$CONF_VERSION_COLOR$CONF_VERSION$CONF_SEP_COLOR/$CONFROOT_VERSION_COLOR$CONFROOT_VERSION$CONF_SEP_COLOR/$CONFCORE_VERSION_COLOR$CONFCORE_VERSION$CONF_SEP_COLOR)"
+
+# compile prompt, with red invite on 'exit-Status != 0'
+#PROMPT_INVITE=$'%{\e[01;34m%}%~ \e[0000m\ek\e\\%(?.%{%}.%{\e[01;31m%})%# %{\e[00m%}'
+#PROMPT_INVITE=$'%{\e[01;34m%}%~%{\ek\e\\%} %(?.%{%}.%{\e[01;31m%})%# %{\e[00m%}'
+PROMPT_INVITE=$'%{\e[01;34m%}%~ %# %{\e[00m%}'
+PROMPT_DATE=$'%{\e[01;36m%}%D{%a %d/%m/%y %H:%M:%S}'
+#PROMPT_JOBS=$'%{\e[00;37m%}[%j job(s)]%{\e[01;37m%}'
+PROMPT_JOBS=$'%{\e[00;37m%}[%j job(s)]%{\e[00m%}'
+#PROMPT_SPACE=""
+#for i in `seq 1 $(($COLUMNS - 45))`; do PROMPT_SPACE="$PROMPT_SPACE ";done
+
+#PROMPT_SHELL="$PROMPT_SHELL_COLOR$SHELL:t $CONF_PART$PROMPT_SHELL_COLOR on %l"
+PROMPT_BASE="${PROMPT_USER_COLOR}%n${PROMPT_HOST_AT_COLOR}@${PROMPT_HOST_COLOR} ${PROMPT_INVITE}"
+#PROMPT="${PROMPT_SHELL}${PROMPT_SPACE}${PROMPT_DATE} ${PROMPT_JOBS}
+#$PROMPT_BASE"
+PROMPT="$PROMPT_BASE"
+

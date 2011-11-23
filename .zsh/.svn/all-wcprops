@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/5/trunk/.zsh
+END
+zshzle
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/4/trunk/.zsh/zshzle
+END
+zshoptions
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/4/trunk/.zsh/zshoptions
+END
+zshmisc
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/4/trunk/.zsh/zshmisc
+END
+zshbindings
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/4/trunk/.zsh/zshbindings
+END
+zshstyle
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/4/trunk/.zsh/zshstyle
+END
+zshexport
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/4/trunk/.zsh/zshexport
+END
+zshaliases
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/5/trunk/.zsh/zshaliases
+END
+zshcompctl
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/4/trunk/.zsh/zshcompctl
+END
+zshcolorsvn
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/4/trunk/.zsh/zshcolorsvn
+END
+.zcompdump
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/4/trunk/.zsh/.zcompdump
+END
+zshfunctions
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/4/trunk/.zsh/zshfunctions
+END
